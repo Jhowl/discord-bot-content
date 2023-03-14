@@ -34,11 +34,14 @@ client.on('interactionCreate', async interaction => {
 
     // await interaction.reply({ content: 'Working on it...', ephemeral: false })
 
-    const generatedContent = await generateContent(content, hashtag)
-    console.log(generatedContent)
-    await interaction.followUp('Pong again! ' + generatedContent)
-    // await interaction.editReply(`Generated content: ${generatedContent}`)
-
+    try {
+      const generatedContent = await generateContent(content, hashtag)
+      console.log(generatedContent)
+      await interaction.editReply(`Generated content: ${generatedContent}`)
+    } catch (error) {
+      console.error(error)
+      await interaction.editReply('Error generating content.')
+    }
   }  else {
     await interaction.reply('Unknown command.')
   }
